@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bầu Cua Giải Trí</title>
+  <style>
+    body {
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      background-image: url('https://via.placeholder.com/150x150?text=Low+Res+Background');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #fff;
+    }
+
+    @media (min-width: 1200px) {
+      body {
+        background-image: url('https://cdn.noron.vn/2022/01/28/87453096210319281-1643324383_1024.png');
+      }
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      margin-bottom: 1.5rem;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .dice-container {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dice {
+      width: 120px;
+      height: 120px;
+      border: 4px solid #fff;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s, opacity 0.3s;
+      background-color: white;
+    }
+
+    .dice.rolling {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    .dice:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 600px) {
+      .dice {
+        width: 80px;
+        height: 80px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    button {
+      padding: 0.8rem 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #ff6b6b, #ff8e53);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      background: linear-gradient(to right, #ff8e53, #ff6b6b);
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px) rotate(-5deg); }
+      75% { transform: translateX(5px) rotate(5deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Lắc Bầu Cua 🎲</h1>
+  <div class="dice-container">
+    <div class="dice" id="dice1" role="img" aria-label="Xúc xắc 1"></div>
+    <div class="dice" id="dice2" role="img" aria-label="Xúc xắc 2"></div>
+    <div class="dice" id="dice3" role="img" aria-label="Xúc xắc 3"></div>
+  </div>
+  <button onclick="rollDice()">Lắc Ngay!</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const images = {
+      bau: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqd5ke5clln6f7",
+      cua: "https://img.pikbest.com/origin/10/13/57/77YpIkbEsT8Ar.jpg!w700wp",
+      tom: "https://haisanbaba.com/wp-content/uploads/tom-1564206655-5711-1564206932.png",
+      ca: "https://img.pikbest.com/origin/10/13/03/87ZpIkbEsTsKn.jpg!w700wp",
+      nai: "https://img.pikbest.com/origin/09/10/59/40IpIkbEsT98a.jpg!w700wp",
+      ga: "https://mekoong.com/wp-content/uploads/2022/11/7151752393896643867-21.jpg"
+    };
+
+    const fallbackImage = "https://via.placeholder.com/100x100?text=Image+Error";
+
+    const keys = Object.keys(images);
+    const translate = {
+      bau: "Bầu",
+      cua: "Cua",
+      tom: "Tôm",
+      ca: "Cá",
+      nai: "Nai",
+      ga: "Gà"
+    };
+
+    function rollDice() {
+      const button = document.querySelector("button");
+      button.disabled = true;
+      const diceElements = [document.getElementById("dice1"), document.getElementById("dice2"), document.getElementById("dice3")];
+      diceElements.forEach(dice => dice.classList.add("rolling"));
+
+      const results = [];
+      diceElements.forEach((dice, index) => {
+        const randKey = keys[Math.floor(Math.random() * keys.length)];
+        const img = new Image();
+        img.src = images[randKey];
+        img.onload = () => {
+          dice.style.backgroundImage = `url('${img.src}')`;
+          dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: ${translate[randKey]}`);
+        };
+        img.onerror = () => {
+          dice.style.backgroundImage = `url('${fallbackImage}')`;
+          dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: Lỗi tải hình`);
+        };
+        results.push(randKey);
+      });
+
+      const readable = results.map(r => translate[r]).join(" - ");
+      document.getElementById("result").textContent = "Kết quả: " + readable;
+
+      setTimeout(() => {
+        diceElements.forEach(dice => dice.classList.remove("rolling"));
+        button.disabled = false;
+      }, 500);
+    }
+  </script>
+</body>
+</html>
