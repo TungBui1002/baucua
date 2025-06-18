@@ -54,7 +54,7 @@
     }
 
     .dice.rolling {
-      animation: shake 0.5s ease-in-out;
+      animation: shake 1.5s ease-in-out;
     }
 
     .dice:hover {
@@ -105,8 +105,10 @@
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px) rotate(-5deg); }
-      75% { transform: translateX(5px) rotate(5deg); }
+      20% { transform: translateX(-8px) rotate(-8deg); }
+      40% { transform: translateX(8px) rotate(8deg); }
+      60% { transform: translateX(-8px) rotate(-8deg); }
+      80% { transform: translateX(8px) rotate(8deg); }
     }
 
     @keyframes fadeIn {
@@ -131,7 +133,7 @@
       cua: "https://img.pikbest.com/origin/10/13/57/77YpIkbEsT8Ar.jpg!w700wp",
       tom: "https://haisanbaba.com/wp-content/uploads/tom-1564206655-5711-1564206932.png",
       ca: "https://img.pikbest.com/origin/10/13/03/87ZpIkbEsTsKn.jpg!w700wp",
-      nai: "https://img.pikbest.com/origin/09/10/59/40IpIkbEsT98a.jpg!w700wp",
+      nai: "https://png.pngtree.com/png-vector/20240924/ourlarge/pngtree-deer-cartoon-png-image_13895314.png",
       ga: "https://mekoong.com/wp-content/uploads/2022/11/7151752393896643867-21.jpg"
     };
 
@@ -153,29 +155,35 @@
       const diceElements = [document.getElementById("dice1"), document.getElementById("dice2"), document.getElementById("dice3")];
       diceElements.forEach(dice => dice.classList.add("rolling"));
 
+      // Chọn kết quả ngẫu nhiên nhưng chưa hiển thị ngay
       const results = [];
-      diceElements.forEach((dice, index) => {
+      diceElements.forEach(() => {
         const randKey = keys[Math.floor(Math.random() * keys.length)];
-        const img = new Image();
-        img.src = images[randKey];
-        img.onload = () => {
-          dice.style.backgroundImage = `url('${img.src}')`;
-          dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: ${translate[randKey]}`);
-        };
-        img.onerror = () => {
-          dice.style.backgroundImage = `url('${fallbackImage}')`;
-          dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: Lỗi tải hình`);
-        };
         results.push(randKey);
       });
 
-      const readable = results.map(r => translate[r]).join(" - ");
-      document.getElementById("result").textContent = "Kết quả: " + readable;
-
+      // Hiển thị kết quả sau 1.5 giây
       setTimeout(() => {
+        diceElements.forEach((dice, index) => {
+          const randKey = results[index];
+          const img = new Image();
+          img.src = images[randKey];
+          img.onload = () => {
+            dice.style.backgroundImage = `url('${img.src}')`;
+            dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: ${translate[randKey]}`);
+          };
+          img.onerror = () => {
+            dice.style.backgroundImage = `url('${fallbackImage}')`;
+            dice.setAttribute("aria-label", `Xúc xắc ${index + 1}: Lỗi tải hình`);
+          };
+        });
+
+        const readable = results.map(r => translate[r]).join(" - ");
+        document.getElementById("result").textContent = "Kết quả: " + readable;
+
         diceElements.forEach(dice => dice.classList.remove("rolling"));
         button.disabled = false;
-      }, 500);
+      }, 1500);
     }
   </script>
 </body>
