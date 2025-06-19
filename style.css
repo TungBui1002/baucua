@@ -1,0 +1,160 @@
+body {
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  background-image: url('https://via.placeholder.com/150x150?text=Low+Res+Background');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  color: #fff;
+}
+
+@media (min-width: 1200px) {
+  body {
+    background-image: url('https://cdn.noron.vn/2022/01/28/87453096210319281-1643324383_1024.png');
+  }
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 1.5rem;
+  animation: fadeIn 1s ease-in;
+}
+
+.dice-container {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dice {
+  width: 120px;
+  height: 120px;
+  border: 4px solid #fff;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s, opacity 0.3s;
+  background-color: white;
+}
+
+.dice.rolling {
+  animation: shake 1.5s ease-in-out;
+}
+
+.dice:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  .dice {
+    width: 80px;
+    height: 80px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+button {
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #ff6b6b, #ff8e53);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: linear-gradient(to right, #ff8e53, #ff6b6b);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result {
+  background-color: green;
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px) rotate(-8deg); }
+  40% { transform: translateX(8px) rotate(8deg); }
+  60% { transform: translateX(-8px) rotate(-8deg); }
+  80% { transform: translateX(8px) rotate(8deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.betting-container {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.betting-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.betting-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.betting-option img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.betting-option input[type="number"] {
+  width: 60px;
+  padding: 0.3rem;
+  border-radius: 6px;
+  border: none;
+  text-align: center;
+}
+
+.betting-container button {
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+}
+
+.balance {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
