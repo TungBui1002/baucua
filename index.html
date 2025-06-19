@@ -152,7 +152,10 @@
     function rollDice() {
       const button = document.querySelector("button");
       button.disabled = true;
-      const diceElements = [document.getElementById("dice1"), document.getElementById("dice2"), document.getElementById("dice3")];
+      const dice1 = document.getElementById("dice1");
+      const dice2 = document.getElementById("dice2");
+      const dice3 = document.getElementById("dice3");
+      const diceElements = [dice1, dice2, dice3];
       diceElements.forEach(dice => dice.classList.add("rolling"));
 
       // Chọn kết quả ngẫu nhiên nhưng chưa hiển thị ngay
@@ -179,7 +182,8 @@
         });
 
         const readable = results.map(r => translate[r]).join(" - ");
-        document.getElementById("result").textContent = "Kết quả: " + readable;
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = "Kết quả: " + readable;
 
         diceElements.forEach(dice => dice.classList.remove("rolling"));
         button.disabled = false;
