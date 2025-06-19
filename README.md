@@ -1,6 +1,6 @@
 README.md
 
-# 🎲 Bầu Cua - Trò chơi dan gian
+# 🎲 Bầu Cua - Trò chơi dân gian
 
 Một trò chơi dân gian Việt Nam được viết bằng **HTML, CSS, JavaScript** để chơi giải trí trực tiếp trên trình duyệt. Giao diện được thiết kế sinh động, vui mắt, tương thích với GitHub Pages.
 
